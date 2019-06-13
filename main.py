@@ -5,7 +5,7 @@ import tensorflow as tf
 from policy_net import Policy_net
 from ppo import PPOTrain
 
-ITERATION = int(1e5)
+ITERATION = int(1e2)
 GAMMA = 0.95
 
 
@@ -59,14 +59,14 @@ def main():
             writer.add_summary(tf.Summary(value=[tf.Summary.Value(tag='episode_reward', simple_value=sum(rewards))])
                                , iteration)
 
-            if sum(rewards) >= 195:
-                success_num += 1
-                if success_num >= 100:
-                    saver.save(sess, './model/model.ckpt')
-                    print('Clear!! Model saved.')
-                    break
-            else:
-                success_num = 0
+            # if sum(rewards) >= 195:
+            #     success_num += 1
+            #     if success_num >= 100:
+            #         saver.save(sess, './model/model_multi.ckpt')
+            #         print('Clear!! Model saved.')
+            #         break
+            # else:
+            #     success_num = 0
 
             gaes = PPO.get_gaes(rewards=rewards, v_preds=v_preds, v_preds_next=v_preds_next)
 
@@ -100,6 +100,8 @@ def main():
 
             writer.add_summary(summary, iteration)
         writer.close()
+        saver.save(sess, './model/model_multi.ckpt')
+        print("model saved")
 
 
 if __name__ == '__main__':

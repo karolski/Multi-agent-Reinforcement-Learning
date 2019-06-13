@@ -4,15 +4,18 @@ import tensorflow as tf
 
 
 class Policy_net:
-    def __init__(self, name: str, env, temp=0.1):
+    def __init__(self, name: str, env, temp=0.1, multi_agent=False):
         """
         :param name: string
         :param env: gym env
         :param temp: temperature of boltzmann distribution
         """
-
-        ob_space = env.observation_space
-        act_space = env.action_space
+        if multi_agent:
+            ob_space = env.observation_space[0]
+            act_space = env.action_space[0]
+        else:
+            ob_space = env.observation_space
+            act_space = env.action_space
 
         with tf.variable_scope(name):
             self.obs = tf.placeholder(dtype=tf.float32, shape=[None] + list(ob_space.shape), name='obs')
