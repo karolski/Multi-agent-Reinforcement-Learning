@@ -3,7 +3,7 @@ import copy
 
 
 class PPOTrain:
-    def __init__(self, Policy, Old_Policy, gamma=0.95, clip_value=0.2, c_1=1, c_2=0.01):
+    def __init__(self, Policy, Old_Policy, gamma=0.95, clip_value=0.2, c_1=1, c_2=0.01, lr=1e-4):
         """
         :param Policy:
         :param Old_Policy:
@@ -72,7 +72,7 @@ class PPOTrain:
             loss_sum = tf.summary.scalar('loss', loss)
 
         self.merged = tf.summary.merge([loss_clip_sum, loss_vf_sum, entropy_sum, loss_sum])
-        optimizer = tf.train.AdamOptimizer(learning_rate=1e-4, epsilon=1e-9)
+        optimizer = tf.train.AdamOptimizer(learning_rate=lr, epsilon=1e-9)
         self.train_op = optimizer.minimize(loss, var_list=pi_trainable)
 
     def train(self, obs, actions, rewards, v_preds_next, gaes):

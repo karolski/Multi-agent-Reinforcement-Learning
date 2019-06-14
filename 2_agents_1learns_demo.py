@@ -8,7 +8,7 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(1e4)
+ITERATION = int(4e4)
 GAMMA = 0.99
 EPISODE_LEN = 100
 ENV_NAME = '2_agents_demo'
@@ -22,7 +22,7 @@ def main():
     num_agents = env.n
     Policy = Policy_net('policy', env, multi_agent=True)
     Old_Policy = Policy_net('old_policy', env, multi_agent=True)
-    PPO = PPOTrain(Policy, Old_Policy, gamma=GAMMA)
+    PPO = PPOTrain(Policy, Old_Policy, gamma=GAMMA, lr=2e-5)
     saver = tf.train.Saver()
 
     with tf.Session() as sess:

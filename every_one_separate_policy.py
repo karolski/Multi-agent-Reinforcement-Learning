@@ -8,7 +8,7 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(1e4)
+ITERATION = int(4e4)
 GAMMA = 0.99
 
 EPISODE_LEN = 100
@@ -22,7 +22,7 @@ def main():
     num_agents = env.n
     Policies =  [Policy_net(f'policy{num}', env, multi_agent=True) for num in range(num_agents)]
     Old_Policies = [Policy_net(f'old_policy{num}', env, multi_agent=True) for num in range(num_agents)]
-    PPOs = [PPOTrain(Policy, Old_Policy, gamma=GAMMA) for Policy , Old_Policy in zip(Policies, Old_Policies)]
+    PPOs = [PPOTrain(Policy, Old_Policy, gamma=GAMMA, lr=2e-5) for Policy , Old_Policy in zip(Policies, Old_Policies)]
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
@@ -30,13 +30,13 @@ def main():
         writer = tf.summary.FileWriter('./log/train_sep_policy'+ENV_NAME+timestamp, sess.graph)
         sess.run(tf.global_variables_initializer())
         success_num = 0
+        all_curr_rews = [0] * num_agents
 
         for iteration in range(ITERATION):  # episode
             all_observations = [ [] for _ in range(num_agents)]
             all_actions = [ [] for _ in range(num_agents)]
             all_v_preds = [ [] for _ in range(num_agents)]
             all_rewards = [ [] for _ in range(num_agents)]
-            all_curr_rews = [0] * num_agents
             run_policy_steps = 0
 
             all_obs = env.reset()
@@ -60,6 +60,7 @@ def main():
 
                 if min(dones) or run_policy_steps > EPISODE_LEN:
                     all_v_preds_next = [agent_v_preds[1:] + [0] for agent_v_preds in all_v_preds]  # next state of terminate state has 0 state value
+                    all_curr_rews = [-10] * num_agents
                     break
                 else:
                     all_obs = next_all_obs
@@ -111,7 +112,7 @@ def main():
                 writer.add_summary(summary, iteration*num_agents+agent_id)
 
         writer.close()
-        saver.save(sess, f'./model/model_sup{ENV_NAME}.ckpt')
+        saver.save(sess, f'./model/model_sep{ENV_NAME}.ckpt')
         print("model saved")
 
         while True:
