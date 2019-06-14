@@ -2,8 +2,8 @@
 import gym
 import numpy as np
 import tensorflow as tf
-from .policy_net import Policy_net
-from .ppo import PPOTrain
+from policy_net import Policy_net
+from ppo import PPOTrain
 from datetime import datetime
 
 from make_env import make_env
