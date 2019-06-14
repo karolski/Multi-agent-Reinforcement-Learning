@@ -2,13 +2,16 @@
 import gym
 import numpy as np
 import tensorflow as tf
-from policy_net import Policy_net
-from ppo import PPOTrain
+from .policy_net import Policy_net
+from .ppo import PPOTrain
 from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(4e4)
+import os
+os.chdir('/tmp/pycharm_project_534/ppo_tf')
+
+ITERATION = int(8e4)
 GAMMA = 0.99
 EPISODE_LEN = 100
 ENV_NAME = '2_agents_demo'
@@ -68,7 +71,7 @@ def main():
                                , iteration)
             writer.add_summary(tf.Summary(value=[tf.Summary.Value(tag='episode_reward', simple_value=sum(rewards))])
                                , iteration)
-            print(f"episode:{iteration}, rewards:{sum(rewards)}")
+            print("episode:",str(iteration), "rewards:",sum(rewards))
 
             gaes = PPO.get_gaes(rewards=rewards, v_preds=v_preds, v_preds_next=v_preds_next)
 
@@ -102,7 +105,7 @@ def main():
 
             writer.add_summary(summary, iteration)
         writer.close()
-        saver.save(sess, f'./model/model_1learns{timestamp}/{ENV_NAME}.ckpt')
+        saver.save(sess, './model/model_1learns' + timestamp + ENV_NAME + '.ckpt')
         print("model saved")
 
         while True:
