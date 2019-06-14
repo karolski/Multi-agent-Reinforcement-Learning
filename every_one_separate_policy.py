@@ -8,11 +8,11 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(4e4)
+ITERATION = int(8e4)
 GAMMA = 0.99
 
-EPISODE_LEN = 100
-ENV_NAME = '2_agents_demo'
+EPISODE_LEN = 600
+ENV_NAME = 'simple_port'
 
 def main():
     env = make_env(ENV_NAME)
@@ -112,7 +112,7 @@ def main():
                 writer.add_summary(summary, iteration*num_agents+agent_id)
 
         writer.close()
-        saver.save(sess, './model/model_sep'+ENV_NAME+'.ckpt')
+        saver.save(sess, './model/model_sep'+ENV_NAME+timestamp+'.ckpt')
         print("model saved")
 
         while True:
