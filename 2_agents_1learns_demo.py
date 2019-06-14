@@ -8,9 +8,6 @@ from datetime import datetime
 
 from make_env import make_env
 
-import os
-os.chdir('/tmp/pycharm_project_534/ppo_tf')
-
 ITERATION = int(8e4)
 GAMMA = 0.99
 EPISODE_LEN = 100

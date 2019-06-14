@@ -20,8 +20,8 @@ def main():
     env.seed(0)
     ob_space = env.observation_space[0]
     num_agents = env.n
-    Policies =  [Policy_net(f'policy{num}', env, multi_agent=True) for num in range(num_agents)]
-    Old_Policies = [Policy_net(f'old_policy{num}', env, multi_agent=True) for num in range(num_agents)]
+    Policies =  [Policy_net('policy'+str(num), env, multi_agent=True) for num in range(num_agents)]
+    Old_Policies = [Policy_net('old_policy'+str(num), env, multi_agent=True) for num in range(num_agents)]
     PPOs = [PPOTrain(Policy, Old_Policy, gamma=GAMMA, lr=2e-5) for Policy , Old_Policy in zip(Policies, Old_Policies)]
     saver = tf.train.Saver()
 
@@ -66,9 +66,9 @@ def main():
                     all_obs = next_all_obs
 
 
-            print(f"episode:{iteration}, rewards:{[sum(rs) for rs in all_rewards]}")
+            print("episode:", iteration, "rewards:", [sum(rs) for rs in all_rewards])
             writer.add_summary(
-                tf.Summary(value=[tf.Summary.Value(tag=f'episode_length', simple_value=run_policy_steps)])
+                tf.Summary(value=[tf.Summary.Value(tag='episode_length', simple_value=run_policy_steps)])
                 , iteration)
             for agent_id in range(num_agents):
                 rewards = all_rewards[agent_id]
@@ -76,7 +76,7 @@ def main():
                 v_preds = all_v_preds[agent_id]
                 v_preds_next = all_v_preds_next[agent_id]
                 actions = all_actions[agent_id]
-                writer.add_summary(tf.Summary(value=[tf.Summary.Value(tag=f'episode_reward_agent{agent_id}',
+                writer.add_summary(tf.Summary(value=[tf.Summary.Value(tag='episode_reward_agent'+ str(agent_id),
                                                                       simple_value=sum(rewards))]) , iteration)
 
                 gaes = PPOs[agent_id].get_gaes(rewards=rewards, v_preds=v_preds,
@@ -112,7 +112,7 @@ def main():
                 writer.add_summary(summary, iteration*num_agents+agent_id)
 
         writer.close()
-        saver.save(sess, f'./model/model_sep{ENV_NAME}.ckpt')
+        saver.save(sess, './model/model_sep'+ENV_NAME+'.ckpt')
         print("model saved")
 
         while True:
