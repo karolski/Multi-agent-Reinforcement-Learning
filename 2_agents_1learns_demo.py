@@ -8,9 +8,9 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(8e4)
+ITERATION = int(2e5)
 GAMMA = 0.99
-EPISODE_LEN = 100
+EPISODE_LEN = 600
 ENV_NAME = '2_agents_demo'
 
 def main():
