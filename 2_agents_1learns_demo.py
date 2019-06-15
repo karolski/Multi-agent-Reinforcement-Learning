@@ -102,7 +102,7 @@ def main():
 
             writer.add_summary(summary, iteration)
             if iteration % 2000 == 0:
-                saver.save(sess, './model/model_sep' + ENV_NAME + timestamp + '.ckpt')
+                saver.save(sess, './model/model_1learns/' + ENV_NAME + timestamp + '.ckpt')
 
         writer.close()
         print("model saved")

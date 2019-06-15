@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import time
+
 import gym
 import numpy as np
 import tensorflow as tf
@@ -11,7 +13,7 @@ from make_env import make_env
 ITERATION = int(8e4)
 GAMMA = 0.99
 EPISODE_LEN = 100
-ENV_NAME = '2_agents_demo'
+ENV_NAME = 'simple_port'
 
 def main():
     timestamp = datetime.now().strftime("%H:%M:%S")
@@ -28,7 +30,7 @@ def main():
     with tf.Session() as sess:
         writer = tf.summary.FileWriter('./log/test_1learns_'+ENV_NAME+timestamp, sess.graph)
         sess.run(tf.global_variables_initializer())
-        saver.restore(sess, 'model/model_1learns16:16:05/2_agents_demo.ckpt')
+        saver.restore(sess, '/home/karol/projects/thesis_2/ppo_tf/model/model_sepsimple_port11:33:24.ckpt')
         all_obs = env.reset()
         # all_rewards = [0]*num_agents
         # success_num = 0
@@ -103,6 +105,7 @@ def main():
                     act, v_pred = Policy.act(obs=obs, stochastic=True)
                     act = np.asscalar(act)
                     all_acts.append(act)
+                time.sleep(0.03)
                 all_obs, all_rewards, dones, info = env.step(all_acts)
                 env.render()
                 if min(dones):
