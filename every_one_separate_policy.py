@@ -8,7 +8,7 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(8e4)
+ITERATION = int(2e4)
 GAMMA = 0.99
 
 EPISODE_LEN = 600
@@ -22,7 +22,7 @@ def main():
     num_agents = env.n
     Policies =  [Policy_net('policy'+str(num), env, multi_agent=True) for num in range(num_agents)]
     Old_Policies = [Policy_net('old_policy'+str(num), env, multi_agent=True) for num in range(num_agents)]
-    PPOs = [PPOTrain(Policy, Old_Policy, gamma=GAMMA, lr=2e-5) for Policy , Old_Policy in zip(Policies, Old_Policies)]
+    PPOs = [PPOTrain(Policy, Old_Policy, gamma=GAMMA, lr=1e-4) for Policy , Old_Policy in zip(Policies, Old_Policies)]
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
@@ -111,9 +111,11 @@ def main():
                                                   gaes=inp[4])[0]
                 writer.add_summary(summary, iteration*num_agents+agent_id)
 
+                if iteration % 2000 == 0:
+                    saver.save(sess, './model/model_sep' + ENV_NAME + timestamp + '.ckpt')
+                    print("model saved")
+
         writer.close()
-        saver.save(sess, './model/model_sep'+ENV_NAME+timestamp+'.ckpt')
-        print("model saved")
 
         while True:
             all_obs = env.reset()

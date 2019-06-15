@@ -1,2 +1,2 @@
-model_checkpoint_path: "model_sep2_agents_demo.ckpt"
-all_model_checkpoint_paths: "model_sep2_agents_demo.ckpt"
+model_checkpoint_path: "model_sepsimple_port10:51:58.ckpt"
+all_model_checkpoint_paths: "model_sepsimple_port10:51:58.ckpt"
