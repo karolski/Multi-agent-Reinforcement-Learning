@@ -11,7 +11,7 @@ from make_env import make_env
 ITERATION = int(4e4)
 GAMMA = 0.99
 EPISODE_LEN = 600
-ENV_NAME = 'sime_port'
+ENV_NAME = 'simple_port'
 
 def main():
     timestamp = datetime.now().strftime("%H:%M:%S")
