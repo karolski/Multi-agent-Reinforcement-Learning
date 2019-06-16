@@ -15,7 +15,7 @@ env.discrete_action_input = True
 num_agents = env.n
 
 sess = tf.Session()
-saver = tf.train.import_meta_graph('/home/karol/projects/thesis_1/single_models/single_ended-15011.meta')
+saver = tf.train.import_meta_graph('models/single_models/single_ended-15011.meta')
 saver.restore(sess,tf.train.latest_checkpoint('single_models'))
 graph = tf.get_default_graph()
 all_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)

@@ -112,7 +112,7 @@ def main():
                 writer.add_summary(summary, iteration*num_agents+agent_id)
 
                 if iteration % 2000 == 0:
-                    saver.save(sess, './model/model_sep' + ENV_NAME + timestamp + '.ckpt')
+                    saver.save(sess, './model/model_sep/' + ENV_NAME + timestamp + '.ckpt')
                     print("model saved")
 
         writer.close()

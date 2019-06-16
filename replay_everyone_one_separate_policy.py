@@ -29,7 +29,7 @@ def main():
         timestamp = datetime.now().strftime("%H:%M:%S")
         # writer = tf.summary.FileWriter('./log/train_sep_policy'+ENV_NAME+timestamp, sess.graph)
         sess.run(tf.global_variables_initializer())
-        saver.restore(sess, '/home/karol/projects/thesis_2/ppo_tf/model/model_sepsimple_port10:51:58.ckpt')
+        saver.restore(sess, 'model/model_sepsimple_port10:51:58.ckpt')
         success_num = 0
         all_curr_rews = [0] * num_agents
 
