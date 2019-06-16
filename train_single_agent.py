@@ -24,7 +24,7 @@ import gym, threading, queue
 from make_env import make_env
 N_WORKER = 12  # parallel workers
 
-EP_MAX = 10
+EP_MAX = 20000
 EP_LEN = 100
 GAMMA = 0.999  # reward discount factor
 A_LR = 0.0001  # learning rate for actor

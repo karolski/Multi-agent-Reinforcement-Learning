@@ -10,7 +10,7 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(2e1)
+ITERATION = int(2e4)
 GAMMA = 0.999
 EPISODE_LEN = 600
 ENV_NAME = 'simple_port'
