@@ -15,6 +15,7 @@ EPISODE_LEN = 600
 ENV_NAME = 'simple_port'
 
 def main():
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
     env = make_env(ENV_NAME)
     env.discrete_action_input = True
     env.seed(0)
@@ -26,7 +27,6 @@ def main():
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
-        timestamp = datetime.now().strftime("%H:%M:%S")
         writer = tf.summary.FileWriter('./log/train_sep_policy/'+ENV_NAME+timestamp, sess.graph)
         sess.run(tf.global_variables_initializer())
         success_num = 0

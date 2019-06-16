@@ -14,7 +14,7 @@ EPISODE_LEN = 600
 ENV_NAME = 'sime_port'
 
 def main():
-    timestamp = datetime.now().strftime("%H:%M:%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
     env = make_env(ENV_NAME)
     env.discrete_action_input = True
     env.seed(0)

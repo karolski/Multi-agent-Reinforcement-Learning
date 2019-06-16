@@ -41,7 +41,9 @@ num_agents = env.n
 S_DIM = env.observation_space[0].shape[0] #every agent sees all the others, so one observation is sufficient
 A_DIM = env.action_space[0].n
 A_DIM_SHAPE = [A_DIM]*num_agents
-logdir = "demo_output"
+timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
+
+logdir = "log/single_agentrun" + GAME + timestamp
 
 
 class PPONet(object):
@@ -214,7 +216,7 @@ class Worker(object):
 
             GLOBAL_EP += 1
             if GLOBAL_EP % 50 == 0 :
-                saver.save(GLOBAL_PPO.sess, 'single_models/single_ended', global_step=GLOBAL_EP)
+                saver.save(GLOBAL_PPO.sess, 'model/single_models/single_ended', global_step=GLOBAL_EP)
 
 
             print('{0:.1f}%'.format(GLOBAL_EP / EP_MAX * 100), '|W%i' % self.wid, '|Ep_r: %.2f' % ep_r, )
