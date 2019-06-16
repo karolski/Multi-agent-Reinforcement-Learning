@@ -12,6 +12,7 @@ ITERATION = int(8e4)
 GAMMA = 0.99
 EPISODE_LEN = 100
 ENV_NAME = '2_agents_demo'
+GRAPH_PREFIX = 'model/model_1learns16:16:05/2_agents_demo.ckpt'
 
 def main():
     timestamp = datetime.now().strftime("%H:%M:%S")
@@ -28,7 +29,7 @@ def main():
     with tf.Session() as sess:
         writer = tf.summary.FileWriter('./log/test_1learns_'+ENV_NAME+timestamp, sess.graph)
         sess.run(tf.global_variables_initializer())
-        saver.restore(sess, 'model/model_1learns16:16:05/2_agents_demo.ckpt')
+        saver.restore(sess, GRAPH_PREFIX)
         all_obs = env.reset()
         # all_rewards = [0]*num_agents
         # success_num = 0

@@ -9,14 +9,15 @@ from make_env import make_env
 
 GAME = 'simple_port'
 EP_LEN = 600
-
+GRAPH_LOCATION = 'model/single_models/single_ended-15011.meta'
+CHECKPOINT_LOCATION = 'model/single_models'
 env = make_env(GAME)
 env.discrete_action_input = True
 num_agents = env.n
 
 sess = tf.Session()
-saver = tf.train.import_meta_graph('models/single_models/single_ended-15011.meta')
-saver.restore(sess,tf.train.latest_checkpoint('single_models'))
+saver = tf.train.import_meta_graph(GRAPH_LOCATION)
+saver.restore(sess,tf.train.latest_checkpoint(CHECKPOINT_LOCATION))
 graph = tf.get_default_graph()
 all_vars = tf.get_collection(tf.GraphKeys.GLOBAL_VARIABLES)
 

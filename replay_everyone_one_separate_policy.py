@@ -13,6 +13,7 @@ GAMMA = 0.99
 
 EPISODE_LEN = 200
 ENV_NAME = 'simple_port'
+GRAPH_PREFIX = 'model/model_sepsimple_port10:51:58.ckpt'
 
 def main():
     env = make_env(ENV_NAME)
@@ -29,7 +30,7 @@ def main():
         timestamp = datetime.now().strftime("%H:%M:%S")
         # writer = tf.summary.FileWriter('./log/train_sep_policy'+ENV_NAME+timestamp, sess.graph)
         sess.run(tf.global_variables_initializer())
-        saver.restore(sess, 'model/model_sepsimple_port10:51:58.ckpt')
+        saver.restore(sess, GRAPH_PREFIX)
         success_num = 0
         all_curr_rews = [0] * num_agents
 

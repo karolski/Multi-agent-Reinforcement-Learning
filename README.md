@@ -1,23 +1,25 @@
-# PPO_tf
-Implementation of proximal policy optimization(PPO) using tensorflow  
+# Multi-agent PPO
+Implementation of proximal policy optimization(PPO) for multi-agent scenarios using tensorflow  
 
 ## environment
-CartPole-v0 of open ai gym  
 state space: continuous  
 action space: discrete  
 
 ## dependencies
-python3.6\
-tensorflow v1.4\
-open ai gym
+https://gitlab.com/karolski/muliti-agent-particle-env-fork
+
+tensorflow 1.13
+matplotlib
 
 ## Training
+```bash
+python train_<variant>.py
 ```
-python main.py 
-```
-## Test trained policy
-```
-python test_policy.py
+## Replay trained policy
+```bash
+python replay_<variant>.py
+with setting a replay model location in the script
+
 ```
 ## Tensorboard
 ```
@@ -25,3 +27,5 @@ tensorboard --logdir=log
 ```
 ## LICENSE
 MIT ICENSE
+
+credits:
