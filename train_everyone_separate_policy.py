@@ -8,14 +8,16 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(2e4)
-GAMMA = 0.99
+ITERATION = int(2e1)
+GAMMA = 0.999
 
 EPISODE_LEN = 600
 ENV_NAME = 'simple_port'
+timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
+logdir = './log/train_sep_policy/' + ENV_NAME + timestamp
+
 
 def main():
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
     env = make_env(ENV_NAME)
     env.discrete_action_input = True
     env.seed(0)
@@ -27,7 +29,7 @@ def main():
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
-        writer = tf.summary.FileWriter('./log/train_sep_policy/'+ENV_NAME+timestamp, sess.graph)
+        writer = tf.summary.FileWriter(logdir, sess.graph)
         sess.run(tf.global_variables_initializer())
         success_num = 0
         all_curr_rews = [0] * num_agents
@@ -111,9 +113,10 @@ def main():
                                                   gaes=inp[4])[0]
                 writer.add_summary(summary, iteration*num_agents+agent_id)
 
-                if iteration % 2000 == 0:
-                    saver.save(sess, './model/model_sep/' + ENV_NAME + timestamp + '.ckpt')
-                    print("model saved")
+            if iteration % 2000 == 0:
+                model_location = './model/model_sep/' + ENV_NAME + timestamp +iteration+ '.ckpt'
+                saver.save(sess, model_location)
+                print("model saved in ", model_location)
 
         writer.close()
 

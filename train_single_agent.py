@@ -24,7 +24,7 @@ import gym, threading, queue
 from make_env import make_env
 N_WORKER = 12  # parallel workers
 
-EP_MAX = 20
+EP_MAX = 10
 EP_LEN = 100
 GAMMA = 0.999  # reward discount factor
 A_LR = 0.0001  # learning rate for actor
@@ -33,7 +33,7 @@ MIN_BATCH_SIZE = 100  # minimum batch size for updating PPO
 UPDATE_STEP = 15  # loop update operation n-steps
 EPSILON = 0.2  # for clipping surrogate objective
 HIDDEN_LAYER_SIZE = 60
-GAME = '2_agents_demo'
+GAME = 'simple_port'
 
 env = make_env(GAME)
 env.discrete_action_input = True
@@ -43,7 +43,7 @@ A_DIM = env.action_space[0].n
 A_DIM_SHAPE = [A_DIM]*num_agents
 timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
 
-logdir = "log/single_agentrun" + GAME + timestamp
+logdir = "log/single_agent/" + GAME + timestamp
 
 
 class PPONet(object):
@@ -216,7 +216,8 @@ class Worker(object):
 
             GLOBAL_EP += 1
             if GLOBAL_EP % 50 == 0 :
-                saver.save(GLOBAL_PPO.sess, 'model/single_models/single_ended', global_step=GLOBAL_EP)
+                saver.save(GLOBAL_PPO.sess, 'model/single_models/' + GAME + timestamp, global_step=GLOBAL_EP)
+                print("model saved in ", 'model/single_models/single_ended' + GAME + timestamp + "-" + str(GLOBAL_EP))
 
 
             print('{0:.1f}%'.format(GLOBAL_EP / EP_MAX * 100), '|W%i' % self.wid, '|Ep_r: %.2f' % ep_r, )
@@ -247,13 +248,13 @@ if __name__ == '__main__':
 
     # plot reward change and test
     plt.plot(np.arange(len(GLOBAL_RUNNING_R)), GLOBAL_RUNNING_R)
-    plt.xlabel('Episode');
-    plt.ylabel('Moving reward');
-    plt.ion();
+    plt.xlabel('Episode')
+    plt.ylabel('Moving reward')
+    plt.ion()
     plt.show()
 
-    saver = tf.train.Saver()
-    saver.save(GLOBAL_PPO.sess, 'single_models/single_ended', global_step=GLOBAL_EP)
+    saver.save(GLOBAL_PPO.sess, 'model/single_models/' + GAME + timestamp, global_step=GLOBAL_EP)
+    print("model saved in ", 'model/single_models/single_ended'+ GAME + timestamp + "-" + str(GLOBAL_EP))
 
     env = make_env(GAME)
     env.discrete_action_input = True

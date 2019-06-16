@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import time
+
 import gym
 import numpy as np
 import tensorflow as tf
@@ -8,11 +10,11 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(8e4)
+ITERATION = int(2e4)
 GAMMA = 0.99
-EPISODE_LEN = 100
-ENV_NAME = '2_agents_demo'
-GRAPH_PREFIX = 'model/model_1learns16:16:05/2_agents_demo.ckpt'
+EPISODE_LEN = 600
+ENV_NAME = 'simple_port'
+GRAPH_PREFIX = 'model/ /simple_port2019-06-16_19:40.ckpt'
 
 def main():
     timestamp = datetime.now().strftime("%H:%M:%S")
@@ -104,6 +106,7 @@ def main():
                     act, v_pred = Policy.act(obs=obs, stochastic=True)
                     act = np.asscalar(act)
                     all_acts.append(act)
+                time.sleep(0.03)
                 all_obs, all_rewards, dones, info = env.step(all_acts)
                 env.render()
                 if min(dones):

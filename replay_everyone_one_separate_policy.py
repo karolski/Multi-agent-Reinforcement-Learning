@@ -13,7 +13,7 @@ GAMMA = 0.99
 
 EPISODE_LEN = 200
 ENV_NAME = 'simple_port'
-GRAPH_PREFIX = 'model/model_sepsimple_port10:51:58.ckpt'
+GRAPH_PREFIX = 'model/model_sep/simple_port2019-06-16_19:21.ckpt'
 
 def main():
     env = make_env(ENV_NAME)

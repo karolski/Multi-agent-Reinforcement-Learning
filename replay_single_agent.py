@@ -9,7 +9,7 @@ from make_env import make_env
 
 GAME = 'simple_port'
 EP_LEN = 600
-GRAPH_LOCATION = 'model/single_models/single_ended-15011.meta'
+GRAPH_LOCATION = 'model/single_models/simple_port2019-06-16_19:56-200.meta'
 CHECKPOINT_LOCATION = 'model/single_models'
 env = make_env(GAME)
 env.discrete_action_input = True

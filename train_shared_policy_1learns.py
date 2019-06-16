@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import time
+
 import gym
 import numpy as np
 import tensorflow as tf
@@ -8,13 +10,14 @@ from datetime import datetime
 
 from make_env import make_env
 
-ITERATION = int(4e4)
-GAMMA = 0.99
+ITERATION = int(2e1)
+GAMMA = 0.999
 EPISODE_LEN = 600
-ENV_NAME = 'sime_port'
+ENV_NAME = 'simple_port'
+timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
+logdir = 'log/train_1learns/'+ENV_NAME+timestamp
 
 def main():
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H:%M")
     env = make_env(ENV_NAME)
     env.discrete_action_input = True
     env.seed(0)
@@ -26,7 +29,7 @@ def main():
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
-        writer = tf.summary.FileWriter('./log/train_1learns_'+ENV_NAME+timestamp, sess.graph)
+        writer = tf.summary.FileWriter(logdir, sess.graph)
         sess.run(tf.global_variables_initializer())
         all_obs = env.reset()
         all_rewards = [0]*num_agents
@@ -102,10 +105,12 @@ def main():
 
             writer.add_summary(summary, iteration)
             if iteration % 2000 == 0:
-                saver.save(sess, './model/model_1learns/' + ENV_NAME + timestamp + '.ckpt')
+                model_location = 'model/model_1learns/' + ENV_NAME + timestamp + '.ckpt'
+                saver.save(sess, model_location)
+                print("model saved in ", model_location)
 
         writer.close()
-        print("model saved")
+
 
         while True:
             all_obs = env.reset()
@@ -116,6 +121,7 @@ def main():
                     act, v_pred = Policy.act(obs=obs, stochastic=True)
                     act = np.asscalar(act)
                     all_acts.append(act)
+                time.sleep(0.03)
                 all_obs, all_rewards, dones, info = env.step(all_acts)
                 env.render()
                 if min(dones):
