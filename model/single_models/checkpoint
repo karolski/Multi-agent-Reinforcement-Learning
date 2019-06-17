@@ -1,4 +1,4 @@
-model_checkpoint_path: "simple_port2019-06-17_06:39-20011"
+model_checkpoint_path: "simple_port2019-06-17_06:39-19850"
 all_model_checkpoint_paths: "simple_port2019-06-17_06:39-19850"
 all_model_checkpoint_paths: "simple_port2019-06-17_06:39-19900"
 all_model_checkpoint_paths: "simple_port2019-06-17_06:39-19950"
