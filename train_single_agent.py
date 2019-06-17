@@ -215,7 +215,7 @@ class Worker(object):
                 GLOBAL_RUNNING_R.append(GLOBAL_RUNNING_R[-1] * 0.9 + ep_r * 0.1)
 
             GLOBAL_EP += 1
-            if GLOBAL_EP % 50 == 0 :
+            if GLOBAL_EP % 2000 == 0 :
                 saver.save(GLOBAL_PPO.sess, 'model/single_models/' + GAME + timestamp, global_step=GLOBAL_EP)
                 print("model saved in ", 'model/single_models/single_ended' + GAME + timestamp + "-" + str(GLOBAL_EP))
 
