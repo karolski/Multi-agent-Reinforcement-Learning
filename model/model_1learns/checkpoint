@@ -1,0 +1,6 @@
+model_checkpoint_path: "simple_port2019-06-17_00:2918000.ckpt"
+all_model_checkpoint_paths: "simple_port2019-06-17_00:2910000.ckpt"
+all_model_checkpoint_paths: "simple_port2019-06-17_00:2912000.ckpt"
+all_model_checkpoint_paths: "simple_port2019-06-17_00:2914000.ckpt"
+all_model_checkpoint_paths: "simple_port2019-06-17_00:2916000.ckpt"
+all_model_checkpoint_paths: "simple_port2019-06-17_00:2918000.ckpt"
