@@ -31,7 +31,7 @@ tensorboard --logdir=log/<name of logdir>
 ## LICENSE
 MIT ICENSE
 
-##credits:
+## Credits:
 - this implementation is a modification of uidilr's [ppo_tf](https://github.com/uidilr/ppo_tf)
 - single agent implementation is a modification of morvanZhou's [discrete_DPPO](ttps://github.com/MorvanZhou/Reinforcement-learning-with-tensorflow/blob/master/contents/12_Proximal_Policy_Optimization/discrete_DPPO.py
 )
